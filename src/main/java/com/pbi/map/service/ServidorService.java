@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pbi.map.dao.ServidorDAO;
 import com.pbi.map.entity.ServidorEntity;
+import com.pbi.map.exception.ObjNaoEncontradoException;
 
 @Service
 public class ServidorService {
@@ -17,8 +18,7 @@ public class ServidorService {
 	
 	public ServidorEntity buscar(Integer id) {
 		Optional<ServidorEntity> Servidor = dao.findById(id);
-		return Servidor.orElse(null);
-//		return Servidor.orElseThrow(()-> new ObjNaoEncontradoException("Objeto não encontrado"));
+		return Servidor.orElseThrow(()-> new ObjNaoEncontradoException("Objeto não encontrado"));
 	}
 	
 	public List<ServidorEntity> buscar(){

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pbi.map.dao.SalaDAO;
 import com.pbi.map.entity.SalaEntity;
+import com.pbi.map.exception.ObjNaoEncontradoException;
 
 @Service
 public class SalaService {
@@ -16,7 +17,7 @@ public class SalaService {
 
 	public SalaEntity buscar(Integer id) {
 		Optional<SalaEntity> Sala = dao.findById(id);
-		return Sala.orElse(null);
+		return Sala.orElseThrow(()-> new ObjNaoEncontradoException("Objeto não encontrado"));
 	}
 
 	public List<SalaEntity> buscar() {

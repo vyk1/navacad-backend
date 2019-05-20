@@ -7,8 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.pbi.map.dao.MarkersDAO;
 import com.pbi.map.dao.SalaDAO;
 import com.pbi.map.dao.ServidorDAO;
+import com.pbi.map.entity.MarkersEntity;
 import com.pbi.map.entity.SalaEntity;
 import com.pbi.map.entity.ServidorEntity;
 
@@ -20,6 +22,9 @@ public class Sismapgeo2Application implements CommandLineRunner {
 
 	@Autowired
 	private ServidorDAO fundao;
+	
+	@Autowired
+	private MarkersDAO markdao;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Sismapgeo2Application.class, args);
@@ -27,6 +32,15 @@ public class Sismapgeo2Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		MarkersEntity m1 = new MarkersEntity(null, "-28.280818", "-53.515310", "Prédio A", "Descrição do Prédio A");
+		MarkersEntity m2 = new MarkersEntity(null, "-28.280579", "-53.515269", "Prédio B", "Descrição do Prédio B");
+		MarkersEntity m3 = new MarkersEntity(null, "-28.280323", "-53.515241", "Prédio C", "Descrição do Prédio C");
+		MarkersEntity m4 = new MarkersEntity(null, "-28.279366", "-53.516667", "Aquele prédio lá",
+				"Descrição do Prédio lá");
+		MarkersEntity m5 = new MarkersEntity(null, "-28.279357", "-53.514969", "Ginásio", "Descrição do Ginásio");
+
+		markdao.saveAll(Arrays.asList(m1, m2, m3, m4, m5));
+
 		SalaEntity s1 = new SalaEntity(null, "Library", "55 3698 7415", "comitedasala@hotmail.com", true);
 
 		ServidorEntity f1 = new ServidorEntity(null, "Jorge Capanema", "jorge.capa@iffar.edu.br", s1);
