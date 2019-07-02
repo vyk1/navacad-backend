@@ -21,11 +21,10 @@ public class SalaEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome, telefone, email;
-
 	private boolean terreo;
 
 //	@JsonManagedReference
-	@JsonIgnoreProperties ("sala")
+	@JsonIgnoreProperties("sala")
 	@OneToMany(mappedBy = "sala")
 	private List<ServidorEntity> funcionarios = new ArrayList<>();
 
@@ -97,6 +96,5 @@ public class SalaEntity implements Serializable {
 		return "SalaEntity [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", terreo="
 				+ terreo + ", funcionarios=" + funcionarios + "]";
 	}
-	
-	
+
 }

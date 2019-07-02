@@ -1,7 +1,9 @@
 package com.pbi.map.resource;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -14,34 +16,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pbi.map.entity.MarkersEntity;
-import com.pbi.map.service.MarkersService;
+import com.pbi.map.dto.HorarioDTO;
+import com.pbi.map.entity.HorarioEntity;
+import com.pbi.map.service.HorarioService;
 
 @RestController
-@RequestMapping(value = "/markers")
-public class MarkersResource {
+@RequestMapping(value = "/horarios")
+public class HorarioResource {
 
 	@Autowired
-	MarkersService service;
+	HorarioService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<MarkersEntity> listardto() {
-		List<MarkersEntity> listaMarkerss = service.buscar();
-//		List<MarkersDTO> listaDTO = listaMarkerss.stream().map(obj -> new MarkersDTO(obj)).collect(Collectors.toList());
-		return listaMarkerss;
+	public List<HorarioEntity> listar() {
+		List<HorarioEntity> lista = service.buscar();
+		return lista;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<MarkersEntity> buscar(@PathVariable Integer id) {
-		MarkersEntity Markers = service.buscar(id);
-		return ResponseEntity.ok(Markers);
+	public ResponseEntity<HorarioEntity> buscar(@PathVariable Integer id) {
+		HorarioEntity Horario = service.buscar(id);
+		return ResponseEntity.ok(Horario);
 	}
 
+	// funfa
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@Valid @RequestBody MarkersEntity obj) {
+	public ResponseEntity<Void> salvar(@Valid @RequestBody HorarioDTO obj) {
 
-		MarkersEntity obj2 = new MarkersEntity(null, obj.getLatitude(), obj.getLongitude(), obj.getDescricao(),
-				obj.getTitulo());
+		System.out.println(obj.toString());
+		HorarioEntity obj2 = new HorarioEntity(null, obj.getInicio(), obj.getFim());
+		Set<Integer> set = new HashSet<Integer>();
+		set.add(obj.getDiaSemanaInt());
+		System.out.println(set);
+		obj2.setDiaSemana(set);
 
 		obj2 = service.salvar(obj2);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj2.getId()).toUri();
@@ -50,10 +57,14 @@ public class MarkersResource {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	public ResponseEntity<Void> atualizar(@Valid @RequestBody MarkersEntity obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> atualizar(@Valid @RequestBody HorarioDTO obj, @PathVariable Integer id) {
 
-		MarkersEntity obj2 = new MarkersEntity(id, obj.getLatitude(), obj.getLongitude(), obj.getDescricao(),
-				obj.getTitulo());
+		System.out.println(obj);
+		HorarioEntity obj2 = new HorarioEntity(id, obj.getInicio(), obj.getFim());
+		Set<Integer> set = new HashSet<Integer>();
+		set.add(obj.getDiaSemanaInt());
+		System.out.println(set);
+		obj2.setDiaSemana(set);
 		obj2 = service.atualizar(obj2);
 
 		return ResponseEntity.noContent().build();
@@ -64,4 +75,5 @@ public class MarkersResource {
 		service.apagar(id);
 		return ResponseEntity.noContent().build();
 	}
+
 }

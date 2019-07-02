@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+ADICIONAR SERVIDOR:
+<BR>
+<form action="localhost:8000/servidores" method="POST">
+    <input type="text" name="nome" id="nome" placeholder="Nome"><br>
+    <input type="text" name="email" id="email" placeholder="Email"><br>
+    <select name="sala_id" id="sala_id"></select>
+    <div id="checkbox"></div>
+
+</form>
+
+<body>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    let url = 'localhost:8000/horarios';
+
+    $.getJSON(url, function (data) {
+        data.forEach(element => {
+            switch (element.diaSemana[0]) {
+                case 1:
+                    dia = "Segunda"
+                    break
+                    console.log('segunda')
+                case 2:
+                    dia = "Terça"
+                    break
+                    console.log('terça')
+                case 3:
+                    dia = "Quarta"
+                    break
+                    console.log('quarta')
+                case 4:
+                    dia = "Quinta"
+                    break
+                    console.log('quinta')
+                case 5:
+                    dia = "Sexta"
+                    break
+                    console.log('sexta')
+            }
+
+            let str = `<input type="checkbox" value=${element.id} id="horarios_id">${dia}-feira ${element.inicio}-${element.fim}<br>`
+            $("#checkbox").append(str)
+        });
+
+
+    })
+</script>
+
+</html>

@@ -8,15 +8,14 @@ public class SalaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-
 	private String nome, telefone, email;
-
 	private boolean terreo;
 
 	public SalaDTO() {
 	}
 
 	public SalaDTO(SalaEntity obj) {
+		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.telefone = obj.getTelefone();
 		this.email = obj.getEmail();
@@ -45,6 +44,14 @@ public class SalaDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

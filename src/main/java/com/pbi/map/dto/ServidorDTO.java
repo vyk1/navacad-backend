@@ -2,26 +2,27 @@ package com.pbi.map.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pbi.map.entity.SalaEntity;
 import com.pbi.map.entity.ServidorEntity;
 
 public class ServidorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String nome;
+	private Integer id;
+	private String nome, email;
 
-	private String email;
-
-	private Integer sala_id;
+	@JsonIgnoreProperties("funcionarios")
+	private SalaEntity sala;
 
 	public ServidorDTO() {
 	}
 
 	public ServidorDTO(ServidorEntity obj) {
-//		super();
+		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.email = obj.getEmail();
-		this.sala_id = obj.getSala().getId();
-//		this.sala_id = 100000;
+		this.sala = obj.getSala();
 	}
 
 	public String getNome() {
@@ -40,12 +41,20 @@ public class ServidorDTO implements Serializable {
 		this.email = email;
 	}
 
-	public Integer getSala_id() {
-		return sala_id;
+	public SalaEntity getSala() {
+		return sala;
 	}
 
-	public void setSala_id(Integer sala_id) {
-		this.sala_id = sala_id;
+	public void setSala(SalaEntity sala) {
+		this.sala = sala;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public static long getSerialversionuid() {

@@ -15,18 +15,31 @@ public class ServidorService {
 
 	@Autowired
 	public ServidorDAO dao;
-	
+
 	public ServidorEntity buscar(Integer id) {
 		Optional<ServidorEntity> Servidor = dao.findById(id);
-		return Servidor.orElseThrow(()-> new ObjNaoEncontradoException("Objeto não encontrado"));
+		return Servidor.orElseThrow(() -> new ObjNaoEncontradoException("Objeto não encontrado"));
 	}
-	
-	public List<ServidorEntity> buscar(){
-		 return dao.findAll();
+
+	public List<ServidorEntity> buscarByNome(String nome) {
+		return dao.search(nome);
+	}
+
+	public List<ServidorEntity> buscar() {
+		return dao.findAll();
 	}
 
 	public ServidorEntity salvar(ServidorEntity obj) {
 		obj.setId(null);
 		return dao.save(obj);
 	}
+	
+	public void apagar(Integer id) {
+		dao.deleteById(id);
+	}
+
+	public ServidorEntity atualizar(ServidorEntity obj) {
+		return dao.save(obj);
+	}
+
 }

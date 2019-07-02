@@ -7,12 +7,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.pbi.map.dao.HorarioDAO;
 import com.pbi.map.dao.MarkersDAO;
 import com.pbi.map.dao.SalaDAO;
 import com.pbi.map.dao.ServidorDAO;
+import com.pbi.map.entity.HorarioEntity;
 import com.pbi.map.entity.MarkersEntity;
 import com.pbi.map.entity.SalaEntity;
 import com.pbi.map.entity.ServidorEntity;
+import com.pbi.sismapgeo.enums.DiaSemana;
 
 @SpringBootApplication
 public class Sismapgeo2Application implements CommandLineRunner {
@@ -22,9 +25,12 @@ public class Sismapgeo2Application implements CommandLineRunner {
 
 	@Autowired
 	private ServidorDAO fundao;
-	
+
 	@Autowired
 	private MarkersDAO markdao;
+
+	@Autowired
+	private HorarioDAO hodao;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Sismapgeo2Application.class, args);
@@ -46,21 +52,32 @@ public class Sismapgeo2Application implements CommandLineRunner {
 		ServidorEntity f1 = new ServidorEntity(null, "Jorge Capanema", "jorge.capa@iffar.edu.br", s1);
 		ServidorEntity f2 = new ServidorEntity(null, "Bernatete EscritoErrado", "brenadetede@iffar.br", s1);
 
+		HorarioEntity h1 = new HorarioEntity(null, "10:40", "18:30");
+		h1.addDiaSemana(DiaSemana.SEGUNDA);
+
+		HorarioEntity h2 = new HorarioEntity(null, "08:00", "12:00");
+		h2.addDiaSemana(DiaSemana.SEGUNDA);
+
+		HorarioEntity h3 = new HorarioEntity(null, "06:00", "10:00");
+		h3.addDiaSemana(DiaSemana.TERÇA);
+
+		HorarioEntity h4 = new HorarioEntity(null, "15:00", "19:00");
+		h4.addDiaSemana(DiaSemana.TERÇA);
+		hodao.saveAll(Arrays.asList(h1, h2, h3, h4));
+
+		f1.getHorarios().addAll(Arrays.asList(h1, h3, h4));
+		f2.getHorarios().addAll(Arrays.asList(h1, h2, h4));
+		System.out.println(f1.toString());
+
 		SalaEntity s2 = new SalaEntity(null, "Coordenação", "55 3265 7701", "coord@hotmail.com", true);
+		SalaEntity s3 = new SalaEntity(null, "Assistência Estudantil", "55 3362 8255", "assistud@hotmail.com", false);
 
-//		s1.setFuncionarios(Arrays.asList(f1,f2));
-		s1.getFuncionarios().addAll(Arrays.asList(f1, f2));
-//		s1.getFuncionarios().add(f1);
-//		s1.getFuncionarios().add(f2);
-		saladao.saveAll(Arrays.asList(s1, s2));
+		s1.getFuncionarios().addAll(Arrays.asList(f1));
+		s2.getFuncionarios().addAll(Arrays.asList(f2));
+		saladao.saveAll(Arrays.asList(s1, s2, s3));
 
-//		não consigo inserir o id da sala no funcionario
-//		quando tento utilizar o DTO, já que não consegue achar o id da sala
-//		ele dá null pointer exception
-//		não relaciona no banco porém o spring parece entender que estão relacionados
-//		o que fazer?
 		fundao.saveAll(Arrays.asList(f1, f2));
-//		System.out.println(f1.toString());
+
 //		System.out.println(s2.toString());
 //		System.out.println(s1.toString());
 

@@ -1,12 +1,16 @@
 package com.pbi.map.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,11 +25,14 @@ public class ServidorEntity implements Serializable {
 	private Integer id;
 	private String nome, email;
 
-//	@JsonBackReference
 	@JsonIgnoreProperties("funcionarios")
 	@ManyToOne
 	@JoinColumn(name = "sala")
 	private SalaEntity sala;
+
+	@ManyToMany
+	@JoinTable(name = "itinerarios", joinColumns = @JoinColumn(name = "servidor_id"), inverseJoinColumns = @JoinColumn(name = "horario_id"))
+	private List<HorarioEntity> horarios = new ArrayList<>();
 
 	public ServidorEntity() {
 	}
@@ -71,6 +78,14 @@ public class ServidorEntity implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<HorarioEntity> getHorarios() {
+		return horarios;
+	}
+
+	public void setHorarios(List<HorarioEntity> horarios) {
+		this.horarios = horarios;
 	}
 
 	@Override
