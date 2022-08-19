@@ -1,6 +1,6 @@
 # Backend do App NavAcad
 
-[Frontend v1](https://github.com/vyk1/navacad) e [Frontend v2](https://github.com/vyk1/navacad3)
+[Frontend v1](https://github.com/vyk1/navacad-frontend-1) e [Frontend v2](https://github.com/vyk1/navacad-frontend-2)
 
 ## Descrição primária
 API CRUD com todas as 4 classes utilizando Sprint Tools 4 (JPA, Hibernate)
@@ -9,7 +9,7 @@ API CRUD com todas as 4 classes utilizando Sprint Tools 4 (JPA, Hibernate)
 Pesquisa direcionada ao nome de Sala e Servidor mapeada com parâmetro
 
 ## Pretendes usar esse código/ideia?
-Crie uma PR e use o text abaixo para citar :smiley:
+Crie uma PR e use o .bibtex abaixo para citar :smiley:
 ```
 @INPROCEEDINGS{199429,
     AUTHOR="Victoria Martins and Ederson Bastiani",
